@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f5f5f5"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- 顶部状态栏：题号 + 统计 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:elevation="4dp"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tvQuestionNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="第1题/共5题"
+            android:textColor="#333333"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- 主内容区域（这个会填满中间所有空间） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:elevation="2dp"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- 题目卡片 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="#E8F5E9"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="题目"
+                android:textColor="#4CAF50"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="4dp"
+                android:text="题目加载中..."
+                android:textColor="#333333"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <!-- 选项区域 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="请选择答案："
+            android:textColor="#666666"
+            android:textSize="16sp" />
+
+        <!-- 选项A -->
+        <Button
+            android:id="@+id/btnOptionA"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#E3F2FD"
+            android:stateListAnimator="@null"
+            android:text="A. 选项A"
+            android:textColor="#1976D2"
+            android:textSize="16sp" />
+
+        <!-- 选项B -->
+        <Button
+            android:id="@+id/btnOptionB"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#E3F2FD"
+            android:stateListAnimator="@null"
+            android:text="B. 选项B"
+            android:textColor="#1976D2"
+            android:textSize="16sp" />
+
+        <!-- 选项C -->
+        <Button
+            android:id="@+id/btnOptionC"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#E3F2FD"
+            android:stateListAnimator="@null"
+            android:text="C. 选项C"
+            android:textColor="#1976D2"
+            android:textSize="16sp" />
+
+        <!-- 选项D -->
+        <Button
+            android:id="@+id/btnOptionD"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="#E3F2FD"
+            android:stateListAnimator="@null"
+            android:text="D. 选项D"
+            android:textColor="#1976D2"
+            android:textSize="16sp" />
+
+        <!-- 答题结果反馈 -->
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFF3E0"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="请选择一个答案"
+            android:textColor="#FF9800"
+            android:textSize="17sp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <!-- 底部导航栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#ffffff"
+        android:elevation="8dp"
+        android:orientation="horizontal"
+        android:paddingVertical="12dp">
+
+        <Button
+            android:id="@+id/btnPrevious"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="#BDBDBD"
+            android:text="上一题"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnShowWrong"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1.2"
+            android:backgroundTint="#FF9800"
+            android:text="📚 错题本"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="#4CAF50"
+            android:text="下一题"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>
