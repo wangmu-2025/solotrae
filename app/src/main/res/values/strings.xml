@@ -1,4 +1,118 @@
 <resources>
-    <string name="app_name">ExamQuestionBank</string>
+    <string name="app_name">考试题库</string>
     <string name="statistics"></string>
+    
+    <!-- 通用 -->
+    <string name="app_logo">应用Logo</string>
+    <string name="back">返回</string>
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
+    <string name="save">保存</string>
+    <string name="delete">删除</string>
+    <string name="edit">编辑</string>
+    <string name="add">添加</string>
+    
+    <!-- 登录注册 -->
+    <string name="login_account">登录账号</string>
+    <string name="register_account">注册账号</string>
+    <string name="username">用户名</string>
+    <string name="enter_username">输入用户名</string>
+    <string name="password">密码</string>
+    <string name="enter_password">输入密码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="email">邮箱</string>
+    <string name="enter_email">输入邮箱</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="no_account">还没有账号？</string>
+    <string name="register_now">立即注册</string>
+    <string name="already_have_account">已经有账号？</string>
+    <string name="login_now">立即登录</string>
+    
+    <!-- 练习模式 -->
+    <string name="practice_mode">练习模式</string>
+    <string name="sequential_practice">顺序练习</string>
+    <string name="sequential_practice_desc">按顺序作答所有题目，适合系统学习</string>
+    <string name="random_practice">随机练习</string>
+    <string name="random_practice_desc">随机抽取题目练习，适合巩固知识点</string>
+    <string name="simulation_exam">模拟考试</string>
+    <string name="simulation_exam_desc">模拟真实考试环境，计时答题，适合考前冲刺</string>
+    <string name="special_practice">专项练习</string>
+    <string name="special_practice_desc">按知识点或难度筛选题目，适合针对性强化</string>
+    <string name="wrong_questions">错题本</string>
+    <string name="wrong_questions_desc">集中练习错题，帮助巩固薄弱环节</string>
+    <string name="start_practice">开始练习</string>
+    <string name="start_exam">开始考试</string>
+    <string name="view_wrong_questions">查看错题</string>
+    
+    <!-- 统计分析 -->
+    <string name="study_statistics">学习统计</string>
+    <string name="total_questions">总答题数</string>
+    <string name="correct_answers">正确数</string>
+    <string name="wrong_answers">错误数</string>
+    <string name="correct_rate">正确率</string>
+    <string name="study_time">学习时长</string>
+    <string name="question_bank_progress">题库完成进度</string>
+    <string name="practice_records">练习记录</string>
+    <string name="recent_practice_records">最近练习记录将显示在这里</string>
+    
+    <!-- 题库相关 -->
+    <string name="question_banks">题库</string>
+    <string name="question_bank">题库</string>
+    <string name="history_question_bank">历史题库</string>
+    <string name="history_question_bank_desc">包含中国历史和世界历史的经典题目</string>
+    <string name="math_question_bank">数学题库</string>
+    <string name="english_question_bank">英语题库</string>
+    <string name="science_question_bank">科学题库</string>
+    
+    <!-- 题目相关 -->
+    <string name="question">题目</string>
+    <string name="option">选项</string>
+    <string name="correct_answer">正确答案</string>
+    <string name="your_answer">你的答案</string>
+    <string name="explanation">解析</string>
+    <string name="difficulty">难度</string>
+    <string name="simple">简单</string>
+    <string name="medium">中等</string>
+    <string name="difficult">困难</string>
+    
+    <!-- 答题相关 -->
+    <string name="please_select_an_answer">请选择一个答案</string>
+    <string name="answer_correct">✅ 回答正确！</string>
+    <string name="answer_wrong">❌ 回答错误！正确答案是：</string>
+    <string name="already_first_question">已经是第一题了</string>
+    <string name="already_last_question">已经是最后一题了</string>
+    
+    <!-- 个人中心 -->
+    <string name="profile">我的</string>
+    <string name="not_logged_in">未登录</string>
+    <string name="login_or_register">登录/注册</string>
+    <string name="personal_settings">个人设置</string>
+    <string name="version">版本</string>
+    
+    <!-- 错误提示 -->
+    <string name="please_fill_in_all_fields">请填写所有必填项</string>
+    <string name="passwords_do_not_match">两次输入的密码不一致</string>
+    <string name="please_enter_valid_email">请输入有效的邮箱地址</string>
+    <string name="please_enter_username_and_password">请输入用户名和密码</string>
+    <string name="username_or_password_incorrect">用户名或密码错误</string>
+    <string name="login_success">登录成功</string>
+    <string name="register_success">注册成功</string>
+    <string name="no_wrong_questions">还没有错题哦，继续保持！</string>
+    <string name="please_fill_in_all_exam_params">请填写完整的考试参数</string>
+    <string name="exam_time_range">考试时间必须在1-300分钟之间</string>
+    <string name="passing_score_range">及格分数必须在0-100之间</string>
+    <string name="please_enter_valid_number">请输入有效的数字</string>
+    <string name="please_select_answer_before_submit">请选择答案后再提交</string>
+    <string name="upload_function_under_development">上传功能开发中，敬请期待！</string>
+    <string name="please_fill_in_all_question_info">请填写完整的题目信息</string>
+    <string name="single_multiple_need_all_options">单选题和多选题需要填写所有选项</string>
+    <string name="please_select_correct_answer">请选择正确答案</string>
+    <string name="question_saved_successfully">题目保存成功</string>
+    <string name="question_saved_failed">题目保存失败：</string>
+    <string name="start_random_practice">开始随机练习</string>
+    <string name="start_sequential_practice">开始顺序练习</string>
+    <string name="please_set_exam_params">请设置考试参数</string>
+    <string name="score_detail_page_under_development">成绩详情页开发中...</string>
+    <string name="no_questions">没有题目</string>
 </resources>

@@ -6,4 +6,5 @@
     </style>
 
     <style name="Theme.ExamQuestionBank" parent="Base.Theme.ExamQuestionBank" />
+    <style name="Theme.ExamQuestionBank.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar" />
 </resources>

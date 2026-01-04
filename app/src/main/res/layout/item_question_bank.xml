@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvBankTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="题库名称"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvBankDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="题库描述"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="12dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvBankCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分类：历史"
+                android:textSize="12sp"
+                android:textColor="#999999"
+                android:background="#F0F0F0"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
+                android:layout_marginEnd="12dp"
+                app:backgroundTint="#E3F2FD"
+                android:textColorLink="#1976D2" />
+
+            <TextView
+                android:id="@+id/tvQuestionCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15道题"
+                android:textSize="12sp"
+                android:textColor="#999999" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

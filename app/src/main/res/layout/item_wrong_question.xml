@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 题目内容 -->
+        <TextView
+            android:id="@+id/tvQuestionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="秦始皇统一六国发生在哪一年？"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 选项内容 -->
+        <TextView
+            android:id="@+id/tvQuestionOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="选项信息缺失"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone" />
+
+        <!-- 答案信息 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="正确答案："
+                    android:textSize="14sp"
+                    android:textColor="#4CAF50"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvCorrectAnswer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="C"
+                    android:textSize="14sp"
+                    android:textColor="#4CAF50" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="你的答案："
+                    android:textSize="14sp"
+                    android:textColor="#FF5252"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvUserAnswer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="A"
+                    android:textSize="14sp"
+                    android:textColor="#FF5252" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="错误次数："
+                    android:textSize="14sp"
+                    android:textColor="#FF9800"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvWrongCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3次"
+                    android:textSize="14sp"
+                    android:textColor="#FF9800" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 解析 -->
+        <TextView
+            android:id="@+id/tvExplanation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="解析：秦始皇于公元前221年统一六国，建立了中国历史上第一个统一的中央集权国家。"
+            android:textSize="14sp"
+            android:textColor="#2196F3"
+            android:background="#E3F2FD"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 操作按钮 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btnMasterQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="斩题"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#4CAF50"
+                app:cornerRadius="8dp"
+                android:paddingHorizontal="24dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

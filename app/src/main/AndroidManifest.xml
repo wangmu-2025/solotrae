@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <!-- ★ 新增权限：允许读取外部存储 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!-- ★ 新增权限：允许网络访问 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,14 +15,91 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExamQuestionBank">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.ExamQuestionBank.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainMenuActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".QuestionBankSelectActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".MainNavActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".ManualImportActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".PracticeRecordsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".WrongQuestionsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".PracticeModeSelectActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".SequentialPracticeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".RandomPracticeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".SimulationExamActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".SimulationExamActivity2"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".WrongQuestionDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".AccountManagerActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".UserAgreementActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
+        <activity
+            android:name=".PrivacyPolicyActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ExamQuestionBank" />
     </application>
 
 </manifest>

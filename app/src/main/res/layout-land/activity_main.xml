@@ -28,43 +28,58 @@
     </LinearLayout>
 
     <!-- 主内容区域（这个会填满中间所有空间） -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_weight="1"
         android:background="#ffffff"
-        android:elevation="2dp"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:elevation="2dp">
 
-        <!-- 题目卡片 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:background="#E8F5E9"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="题目"
-                android:textColor="#4CAF50"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvQuestion"
+            <!-- 题目卡片 -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:lineSpacingExtra="4dp"
-                android:text="题目加载中..."
-                android:textColor="#333333"
-                android:textSize="20sp" />
+                android:layout_marginBottom="20dp"
+                android:background="#E8F5E9"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="题目"
+                    android:textColor="#4CAF50"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:lineSpacingExtra="4dp"
+                    android:text="题目加载中..."
+                    android:textColor="#333333"
+                    android:textSize="20sp" />
         </LinearLayout>
+
+        <!-- 题目类型 -->
+        <TextView
+            android:id="@+id/tvQuestionType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="单选题"
+            android:textSize="14sp"
+            android:textColor="#4CAF50"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
 
         <!-- 选项区域 -->
         <TextView
@@ -75,53 +90,244 @@
             android:textColor="#666666"
             android:textSize="16sp" />
 
-        <!-- 选项A -->
-        <Button
-            android:id="@+id/btnOptionA"
+        <!-- 单选题和多选题的选项列表 -->
+        <LinearLayout
+            android:id="@+id/llOptions"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="#E3F2FD"
-            android:stateListAnimator="@null"
-            android:text="A. 选项A"
-            android:textColor="#1976D2"
-            android:textSize="16sp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp">
 
-        <!-- 选项B -->
-        <Button
-            android:id="@+id/btnOptionB"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="#E3F2FD"
-            android:stateListAnimator="@null"
-            android:text="B. 选项B"
-            android:textColor="#1976D2"
-            android:textSize="16sp" />
+            <!-- 选项A -->
+            <LinearLayout
+                android:id="@+id/llOptionA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="#E3F2FD"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
 
-        <!-- 选项C -->
-        <Button
-            android:id="@+id/btnOptionC"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="#E3F2FD"
-            android:stateListAnimator="@null"
-            android:text="C. 选项C"
-            android:textColor="#1976D2"
-            android:textSize="16sp" />
+                <RadioButton
+                    android:id="@+id/rbOptionA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:buttonTint="#1976D2" />
 
-        <!-- 选项D -->
-        <Button
-            android:id="@+id/btnOptionD"
+                <CheckBox
+                    android:id="@+id/cbOptionA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:buttonTint="#1976D2"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvOptionA"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="A. 选项A"
+                    android:textSize="16sp"
+                    android:textColor="#1976D2" />
+            </LinearLayout>
+
+            <!-- 选项B -->
+            <LinearLayout
+                android:id="@+id/llOptionB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="#E3F2FD"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <RadioButton
+                    android:id="@+id/rbOptionB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:buttonTint="#1976D2" />
+
+                <CheckBox
+                    android:id="@+id/cbOptionB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:buttonTint="#1976D2"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvOptionB"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="B. 选项B"
+                    android:textSize="16sp"
+                    android:textColor="#1976D2" />
+            </LinearLayout>
+
+            <!-- 选项C -->
+            <LinearLayout
+                android:id="@+id/llOptionC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="#E3F2FD"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <RadioButton
+                    android:id="@+id/rbOptionC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:buttonTint="#1976D2" />
+
+                <CheckBox
+                    android:id="@+id/cbOptionC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:buttonTint="#1976D2"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvOptionC"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="C. 选项C"
+                    android:textSize="16sp"
+                    android:textColor="#1976D2" />
+            </LinearLayout>
+
+            <!-- 选项D -->
+            <LinearLayout
+                android:id="@+id/llOptionD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="#E3F2FD"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <RadioButton
+                    android:id="@+id/rbOptionD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:buttonTint="#1976D2" />
+
+                <CheckBox
+                    android:id="@+id/cbOptionD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:buttonTint="#1976D2"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvOptionD"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="D. 选项D"
+                    android:textSize="16sp"
+                    android:textColor="#1976D2" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 判断题选项 -->
+        <LinearLayout
+            android:id="@+id/llJudgeOptions"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
             android:layout_marginBottom="20dp"
-            android:backgroundTint="#E3F2FD"
-            android:stateListAnimator="@null"
-            android:text="D. 选项D"
-            android:textColor="#1976D2"
-            android:textSize="16sp" />
+            android:visibility="gone">
+
+            <!-- 对选项 -->
+            <LinearLayout
+                android:id="@+id/llJudgeTrue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="#E3F2FD"
+                android:layout_marginEnd="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <RadioButton
+                    android:id="@+id/rbJudgeTrue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:buttonTint="#1976D2" />
+
+                <TextView
+                    android:id="@+id/tvJudgeTrue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="对"
+                    android:textSize="16sp"
+                    android:textColor="#1976D2" />
+            </LinearLayout>
+
+            <!-- 错选项 -->
+            <LinearLayout
+                android:id="@+id/llJudgeFalse"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="#E3F2FD"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <RadioButton
+                    android:id="@+id/rbJudgeFalse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:buttonTint="#1976D2" />
+
+                <TextView
+                    android:id="@+id/tvJudgeFalse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="错"
+                    android:textSize="16sp"
+                    android:textColor="#1976D2" />
+            </LinearLayout>
+        </LinearLayout>
 
         <!-- 答题结果反馈 -->
         <TextView
@@ -135,7 +341,8 @@
             android:textColor="#FF9800"
             android:textSize="17sp"
             android:visibility="visible" />
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <!-- 底部导航栏 -->
     <LinearLayout
@@ -145,38 +352,51 @@
         android:background="#ffffff"
         android:elevation="8dp"
         android:orientation="horizontal"
-        android:paddingVertical="12dp">
+        android:paddingVertical="8dp">
 
         <Button
             android:id="@+id/btnPrevious"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="8dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="6dp"
             android:layout_weight="1"
             android:backgroundTint="#BDBDBD"
             android:text="上一题"
             android:textColor="#ffffff"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/btnShowWrong"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1.2"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="6dp"
+            android:layout_weight="1"
             android:backgroundTint="#FF9800"
-            android:text="📚 错题本"
+            android:text="错题"
             android:textColor="#ffffff"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/btnNext"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="8dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="6dp"
             android:layout_weight="1"
             android:backgroundTint="#4CAF50"
             android:text="下一题"
             android:textColor="#ffffff"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
+
+        <!-- 上传题库按钮 -->
+        <Button
+            android:id="@+id/btnUpload"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="6dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FF9800"
+            android:text="上传"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
     </LinearLayout>
 </LinearLayout>

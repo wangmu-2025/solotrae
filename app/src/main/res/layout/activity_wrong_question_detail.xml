@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- 顶部标题栏 -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#FFFFFF"
+        android:elevation="4dp"
+        app:title="错题详情"
+        app:titleTextColor="#333333"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+        app:navigationContentDescription="返回" />
+
+    <!-- 题库信息 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="#F5F5F5">
+
+        <TextView
+            android:id="@+id/tvBankTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="历史题库"
+            android:textSize="18sp"
+            android:textColor="#333333"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvBankWrongCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="共 0 道错题"
+            android:textSize="14sp"
+            android:textColor="#FF5252" />
+
+    </LinearLayout>
+
+    <!-- 错题列表区域 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 错题列表 -->
+            <LinearLayout
+                android:id="@+id/llWrongQuestionsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <!-- 空状态提示 -->
+            <TextView
+                android:id="@+id/tvEmptyState"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:gravity="center"
+                android:text="该题库暂无错题记录"
+                android:textSize="16sp"
+                android:textColor="#999999"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

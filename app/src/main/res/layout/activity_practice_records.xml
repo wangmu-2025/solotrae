@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- 练习记录列表 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPracticeRecords"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#E0E0E0"
+        android:dividerHeight="1dp"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <!-- 无记录提示 -->
+    <TextView
+        android:id="@+id/tvNoRecords"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="暂无练习记录"
+        android:textSize="18sp"
+        android:textColor="#9E9E9E"
+        android:gravity="center"
+        android:padding="32dp"
+        android:visibility="gone" />
+
+</LinearLayout>

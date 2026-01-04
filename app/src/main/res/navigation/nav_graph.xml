@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/questionBankFragment">
+
+    <!-- 题库选择Fragment -->
+    <fragment
+        android:id="@+id/questionBankFragment"
+        android:name="com.example.examquestionbank.QuestionBankFragment"
+        android:label="题库"
+        tools:layout="@layout/fragment_question_bank" />
+
+    <!-- 练习Fragment -->
+    <fragment
+        android:id="@+id/practiceFragment"
+        android:name="com.example.examquestionbank.PracticeFragment"
+        android:label="练习"
+        tools:layout="@layout/fragment_practice" />
+
+    <!-- 统计Fragment -->
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.example.examquestionbank.StatisticsFragment"
+        android:label="统计"
+        tools:layout="@layout/fragment_statistics" />
+
+    <!-- 题目导入Fragment -->
+    <fragment
+        android:id="@+id/questionImportFragment"
+        android:name="com.example.examquestionbank.QuestionImportFragment"
+        android:label="导入"
+        tools:layout="@layout/fragment_question_import" />
+
+    <!-- 个人中心Fragment -->
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.examquestionbank.ProfileFragment"
+        android:label="我的"
+        tools:layout="@layout/fragment_profile" />
+
+    <!-- 答题Activity -->
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.examquestionbank.MainActivity"
+        android:label="答题" />
+
+    <!-- 题库选择Activity -->
+    <activity
+        android:id="@+id/questionBankSelectActivity"
+        android:name="com.example.examquestionbank.QuestionBankSelectActivity"
+        android:label="选择题库" />
+
+    <!-- 错题本Activity -->
+    <activity
+        android:id="@+id/wrongQuestionsActivity"
+        android:name="com.example.examquestionbank.WrongQuestionsActivity"
+        android:label="错题本" />
+
+    <!-- 练习记录Activity -->
+    <activity
+        android:id="@+id/practiceRecordsActivity"
+        android:name="com.example.examquestionbank.PracticeRecordsActivity"
+        android:label="练习记录" />
+
+    <!-- 手动导入Activity -->
+    <activity
+        android:id="@+id/manualImportActivity"
+        android:name="com.example.examquestionbank.ManualImportActivity"
+        android:label="手动导入" />
+
+
+
+</navigation>
