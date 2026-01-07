@@ -1,0 +1,323 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">系统设置</h5>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-info mb-4">
+                <strong>提示：</strong> 系统设置会影响整个应用的运行，请谨慎修改。
+            </div>
+            
+            <form id="settingsForm">
+                <div class="mb-3">
+                    <h6>基础设置</h6>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="appName" class="form-label">应用名称</label>
+                            <input type="text" class="form-control" id="appName" name="appName" placeholder="请输入应用名称">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="appVersion" class="form-label">应用版本</label>
+                            <input type="text" class="form-control" id="appVersion" name="appVersion" placeholder="请输入应用版本">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <h6>安全设置</h6>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="jwtExpiration" class="form-label">JWT过期时间（分钟）</label>
+                            <input type="number" class="form-control" id="jwtExpiration" name="jwtExpiration" placeholder="请输入JWT过期时间">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="passwordMinLength" class="form-label">密码最小长度</label>
+                            <input type="number" class="form-control" id="passwordMinLength" name="passwordMinLength" placeholder="请输入密码最小长度">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <h6>邮件设置</h6>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="smtpHost" class="form-label">SMTP服务器</label>
+                            <input type="text" class="form-control" id="smtpHost" name="smtpHost" placeholder="请输入SMTP服务器地址">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="smtpPort" class="form-label">SMTP端口</label>
+                            <input type="number" class="form-control" id="smtpPort" name="smtpPort" placeholder="请输入SMTP端口">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="smtpSSL" class="form-label">启用SSL</label>
+                            <select class="form-select" id="smtpSSL" name="smtpSSL">
+                                <option value="true">是</option>
+                                <option value="false">否</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="smtpUsername" class="form-label">SMTP用户名</label>
+                            <input type="text" class="form-control" id="smtpUsername" name="smtpUsername" placeholder="请输入SMTP用户名">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="smtpPassword" class="form-label">SMTP密码</label>
+                            <input type="password" class="form-control" id="smtpPassword" name="smtpPassword" placeholder="请输入SMTP密码">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <h6>存储设置</h6>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="fileUploadPath" class="form-label">文件上传路径</label>
+                            <input type="text" class="form-control" id="fileUploadPath" name="fileUploadPath" placeholder="请输入文件上传路径">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="maxFileSize" class="form-label">最大文件大小（MB）</label>
+                            <input type="number" class="form-control" id="maxFileSize" name="maxFileSize" placeholder="请输入最大文件大小">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary me-2" onclick="resetSettings()">重置</button>
+                    <button type="submit" class="btn btn-primary">保存设置</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">高级设置</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>设置键</th>
+                        <th>设置值</th>
+                        <th>描述</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="advancedSettingsTableBody">
+                    <!-- 高级设置列表将通过JavaScript动态生成 -->
+                    <tr>
+                        <td colspan="4" class="text-center">暂无数据</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <button class="btn btn-outline-primary mt-3" data-bs-toggle="modal" data-bs-target="#addAdvancedSettingModal">
+                <i class="bi bi-plus"></i> 添加高级设置
+            </button>
+        </div>
+    </div>
+    
+    <!-- 添加高级设置模态框 -->
+    <div class="modal fade" id="addAdvancedSettingModal" tabindex="-1" aria-labelledby="addAdvancedSettingModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAdvancedSettingModalLabel">添加高级设置</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addAdvancedSettingForm">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="settingKey" class="form-label">设置键</label>
+                            <input type="text" class="form-control" id="settingKey" name="settingKey" required placeholder="请输入设置键">
+                        </div>
+                        <div class="mb-3">
+                            <label for="settingValue" class="form-label">设置值</label>
+                            <input type="text" class="form-control" id="settingValue" name="settingValue" required placeholder="请输入设置值">
+                        </div>
+                        <div class="mb-3">
+                            <label for="settingDescription" class="form-label">描述</label>
+                            <textarea class="form-control" id="settingDescription" name="settingDescription" rows="2" placeholder="请输入设置描述"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">添加</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // API基础URL配置
+        const API_BASE_URL = '/api';
+        
+        // 页面加载完成后调用API获取数据
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchSystemSettings();
+            fetchAdvancedSettings();
+            
+            // 绑定表单提交事件
+            document.getElementById('settingsForm').addEventListener('submit', saveSettings);
+            document.getElementById('addAdvancedSettingForm').addEventListener('submit', addAdvancedSetting);
+        });
+        
+        // 获取系统设置
+        function fetchSystemSettings() {
+            // 这里可以根据需要从后端获取设置并填充表单
+            // 目前使用默认值
+            document.getElementById('appName').value = '考试题库管理系统';
+            document.getElementById('appVersion').value = '1.0.0';
+            document.getElementById('jwtExpiration').value = '30';
+            document.getElementById('passwordMinLength').value = '6';
+            document.getElementById('smtpHost').value = 'smtp.example.com';
+            document.getElementById('smtpPort').value = '465';
+            document.getElementById('smtpSSL').value = 'true';
+            document.getElementById('smtpUsername').value = 'admin@example.com';
+            document.getElementById('fileUploadPath').value = '/uploads';
+            document.getElementById('maxFileSize').value = '10';
+        }
+        
+        // 获取高级设置
+        function fetchAdvancedSettings() {
+            fetch(`${API_BASE_URL}/system-settings`, {
+                credentials: 'include' // 包含凭证（cookie）
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    renderAdvancedSettings(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching advanced settings:', error);
+                    alert('获取高级设置失败，请稍后重试');
+                });
+        }
+        
+        // 渲染高级设置列表
+        function renderAdvancedSettings(settings) {
+            const tbody = document.getElementById('advancedSettingsTableBody');
+            
+            if (settings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center">暂无数据</td></tr>';
+                return;
+            }
+            
+            let html = '';
+            settings.forEach(setting => {
+                html += `
+                    <tr>
+                        <td>${setting.key}</td>
+                        <td>${setting.value}</td>
+                        <td>${setting.description || ''}</td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" onclick="deleteAdvancedSetting(${setting.id})"><i class="bi bi-trash"></i> 删除</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+        }
+        
+        // 保存设置
+        function saveSettings(event) {
+            event.preventDefault();
+            
+            // 这里可以根据需要将表单数据发送到后端
+            // 目前只做本地处理
+            alert('设置保存成功');
+        }
+        
+        // 重置设置
+        function resetSettings() {
+            fetchSystemSettings();
+            alert('设置已重置');
+        }
+        
+        // 添加高级设置
+        function addAdvancedSetting(event) {
+            event.preventDefault();
+            
+            // 获取提交按钮并设置为加载状态
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 加载中...';
+            
+            const formData = new FormData(event.target);
+            const settingData = {
+                key: formData.get('settingKey'),
+                value: formData.get('settingValue'),
+                description: formData.get('settingDescription')
+            };
+            
+            fetch(`${API_BASE_URL}/system-settings`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include', // 包含凭证（cookie）
+                body: JSON.stringify(settingData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(() => {
+                // 关闭模态框
+                const addModal = bootstrap.Modal.getInstance(document.getElementById('addAdvancedSettingModal'));
+                addModal.hide();
+                
+                // 重置表单
+                event.target.reset();
+                
+                // 重新加载数据
+                fetchAdvancedSettings();
+                
+                alert('高级设置添加成功');
+            })
+            .catch(error => {
+                console.error('Error adding advanced setting:', error);
+                alert('添加高级设置失败，请稍后重试');
+            })
+            .finally(() => {
+                // 恢复按钮状态
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            });
+        }
+        
+        // 删除高级设置
+        function deleteAdvancedSetting(id) {
+            if (confirm('您确定要删除这个高级设置吗？')) {
+                fetch(`${API_BASE_URL}/system-settings/${id}`, {
+                    method: 'DELETE',
+                    credentials: 'include' // 包含凭证（cookie）
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response;
+                })
+                .then(() => {
+                    // 重新加载数据
+                    fetchAdvancedSettings();
+                    
+                    alert('高级设置删除成功');
+                })
+                .catch(error => {
+                    console.error('Error deleting advanced setting:', error);
+                    alert('删除高级设置失败，请稍后重试');
+                });
+            }
+        }
+    </script>
+</div>

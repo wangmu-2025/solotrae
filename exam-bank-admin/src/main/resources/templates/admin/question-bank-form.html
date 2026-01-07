@@ -1,0 +1,29 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title" th:text="${questionBank.id} ? '编辑题库' : '添加题库'"></h5>
+        </div>
+        <div class="card-body">
+            <form th:action="${questionBank.id} ? @{/admin/question-banks/update/{id}(id=${questionBank.id})} : @{/admin/question-banks/save}" method="post" th:object="${questionBank}">
+                <div class="mb-3">
+                    <label for="title" class="form-label">题库名称 <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="title" th:field="*{title}" required>
+                    <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">题库描述</label>
+                    <textarea class="form-control" id="description" th:field="*{description}" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label">分类 <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="category" th:field="*{category}" required>
+                    <div class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <a th:href="@{/admin/question-banks}" class="btn btn-secondary me-2">取消</a>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

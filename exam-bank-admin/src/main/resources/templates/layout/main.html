@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title} + ' - 考试题库管理系统'">考试题库管理系统</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+        .sidebar-header {
+            padding: 1rem;
+            background-color: #212529;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        .sidebar-nav {
+            padding: 0;
+            list-style: none;
+        }
+        .sidebar-nav li a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #adb5bd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .sidebar-nav li a:hover,
+        .sidebar-nav li a.active {
+            background-color: #495057;
+            color: white;
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 1rem;
+        }
+        .navbar {
+            background-color: white;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 1rem;
+        }
+        .card {
+            margin-bottom: 1rem;
+        }
+        .btn-space {
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            考试题库管理
+        </div>
+        <ul class="sidebar-nav">
+            <li>
+                <a th:href="@{/admin/dashboard}" th:classappend="${activePage == 'dashboard' ? 'active' : ''}">
+                    <i class="bi bi-speedometer2"></i> 仪表盘
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/users}" th:classappend="${activePage == 'users' ? 'active' : ''}">
+                    <i class="bi bi-people"></i> 用户管理
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/questions}" th:classappend="${activePage == 'questions' ? 'active' : ''}">
+                    <i class="bi bi-file-text"></i> 题目管理
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/question-banks}" th:classappend="${activePage == 'question-banks' ? 'active' : ''}">
+                    <i class="bi bi-book"></i> 题库管理
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/settings}" th:classappend="${activePage == 'settings' ? 'active' : ''}">
+                    <i class="bi bi-gear"></i> 系统设置
+                </a>
+            </li>
+        </ul>
+    </aside>
+    
+    <!-- 主内容区 -->
+    <main class="main-content">
+        <!-- 顶部导航栏 -->
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <h1 class="navbar-brand mb-0" th:text="${title}">首页</h1>
+                <div class="ms-auto">
+                    <span class="navbar-text me-3">
+                        欢迎，<span th:text="${username}">管理员</span>
+                    </span>
+                    <a th:href="@{/logout}" class="btn btn-outline-danger">退出登录</a>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- 内容区域 -->
+        <div class="container-fluid">
+            <div th:replace="~{${content}}"></div>
+        </div>
+    </main>
+    
+    <script src="/webjars/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

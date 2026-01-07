@@ -1,0 +1,147 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">欢迎使用考试题库管理系统</h5>
+        </div>
+        <div class="card-body">
+            <p>这是系统的管理控制台，您可以在这里管理用户、题目和题库。</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">总用户数</h5>
+                    <p id="userCount" class="card-text display-4">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">总题目数</h5>
+                    <p id="questionCount" class="card-text display-4">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5 class="card-title">总题库数</h5>
+                    <p id="questionBankCount" class="card-text display-4">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">今日登录</h5>
+                    <p id="todayLoginCount" class="card-text display-4">0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">最近用户</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>用户名</th>
+                                <th>邮箱</th>
+                                <th>角色</th>
+                                <th>注册时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="4" class="text-center">暂无数据</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">最近题目</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>题目类型</th>
+                                <th>题目内容</th>
+                                <th>创建时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="3" class="text-center">暂无数据</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // API基础URL配置
+        const API_BASE_URL = '/api';
+        
+        // 页面加载完成后调用API获取数据
+        document.addEventListener('DOMContentLoaded', function() {
+            // fetchUserCount(); // 用户管理功能暂未实现
+            fetchQuestionCount();
+            fetchQuestionBankCount();
+        });
+        
+        // 获取用户总数（暂未实现）
+        function fetchUserCount() {
+            // 用户管理功能将在后续版本中实现
+            document.getElementById('userCount').textContent = 0;
+        }
+        
+        // 获取题目总数
+        function fetchQuestionCount() {
+            fetch(`${API_BASE_URL}/questions/count`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('questionCount').textContent = data;
+                })
+                .catch(error => {
+                    console.error('Error fetching question count:', error);
+                });
+        }
+        
+        // 获取题库总数
+        function fetchQuestionBankCount() {
+            fetch(`${API_BASE_URL}/question-banks/count`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('questionBankCount').textContent = data;
+                })
+                .catch(error => {
+                    console.error('Error fetching question bank count:', error);
+                });
+        }
+    </script>
+</div>

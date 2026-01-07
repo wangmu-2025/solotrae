@@ -1,0 +1,774 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">题目管理</h5>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addQuestionModal">
+                    <i class="bi bi-plus"></i> 添加题目
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <form class="d-flex flex-wrap gap-2">
+                    <select class="form-select" id="questionBankSelect" style="width: 200px;">
+                        <option value="">选择题库</option>
+                        <!-- 题库列表将通过JavaScript动态生成 -->
+                    </select>
+                    <select class="form-select" id="questionTypeSelect" style="width: 150px;">
+                        <option value="">所有题型</option>
+                        <option value="single_choice">单选题</option>
+                        <option value="multiple_choice">多选题</option>
+                        <option value="true_false">判断题</option>
+                        <option value="fill_blank">填空题</option>
+                        <option value="essay">简答题</option>
+                    </select>
+                    <select class="form-select" id="difficultySelect" style="width: 150px;">
+                        <option value="">所有难度</option>
+                        <option value="easy">简单</option>
+                        <option value="medium">中等</option>
+                        <option value="hard">困难</option>
+                    </select>
+                    <input type="text" class="form-control" id="keywordInput" placeholder="搜索题目内容" style="width: 300px;">
+                    <button type="button" class="btn btn-outline-primary" onclick="searchQuestions()">搜索</button>
+                </form>
+            </div>
+            
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>题目内容</th>
+                        <th>题型</th>
+                        <th>难度</th>
+                        <th>题库</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="questionTableBody">
+                    <!-- 题目列表将通过JavaScript动态生成 -->
+                    <tr>
+                        <td colspan="6" class="text-center">暂无数据</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- 分页控件 -->
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
+                    </li>
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">下一页</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    
+    <!-- 添加题目模态框 -->
+    <div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="addQuestionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addQuestionModalLabel">添加题目</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addQuestionForm">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="questionBankId" class="form-label">所属题库 <span class="text-danger">*</span></label>
+                            <select class="form-select" id="questionBankId" name="questionBankId" required>
+                                <option value="">选择题库</option>
+                                <!-- 题库列表将通过JavaScript动态生成 -->
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="questionText" class="form-label">题目内容 <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="questionText" name="text" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="questionType" class="form-label">题型 <span class="text-danger">*</span></label>
+                            <select class="form-select" id="questionType" name="type" required>
+                                <option value="single_choice">单选题</option>
+                                <option value="multiple_choice">多选题</option>
+                                <option value="true_false">判断题</option>
+                                <option value="fill_blank">填空题</option>
+                                <option value="essay">简答题</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="questionDifficulty" class="form-label">难度 <span class="text-danger">*</span></label>
+                            <select class="form-select" id="questionDifficulty" name="difficulty" required>
+                                <option value="easy">简单</option>
+                                <option value="medium">中等</option>
+                                <option value="hard">困难</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3" id="optionsSection">
+                            <label class="form-label">选项</label>
+                            <!-- 选项将根据题型动态生成 -->
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="questionAnswer" class="form-label">答案 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="questionAnswer" name="answer" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="questionScore" class="form-label">分值 <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="questionScore" name="score" step="0.5" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="questionTags" class="form-label">标签</label>
+                            <input type="text" class="form-control" id="questionTags" name="tags" placeholder="用逗号分隔多个标签">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="questionAnalysis" class="form-label">解析</label>
+                            <textarea class="form-control" id="questionAnalysis" name="analysis" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">添加</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 编辑题目模态框 -->
+    <div class="modal fade" id="editQuestionModal" tabindex="-1" aria-labelledby="editQuestionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editQuestionModalLabel">编辑题目</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="editQuestionForm">
+                    <input type="hidden" id="editQuestionId" name="id">
+                    <div class="modal-body">
+                        <!-- 编辑表单内容，与添加表单类似 -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 删除确认对话框 -->
+    <div class="modal fade" id="deleteQuestionConfirmModal" tabindex="-1" aria-labelledby="deleteQuestionConfirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteQuestionConfirmModalLabel">确认删除</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>您确定要删除这个题目吗？此操作不可恢复。</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteQuestionBtn">删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // API基础URL配置
+        const API_BASE_URL = '/api';
+        let currentDeleteQuestionId = null;
+        
+        // 显示错误消息
+        function showErrorMessage(message) {
+            // 创建错误消息元素
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3 z-50';
+            errorDiv.role = 'alert';
+            errorDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            
+            // 添加到页面
+            document.body.appendChild(errorDiv);
+            
+            // 3秒后自动关闭
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 3000);
+        }
+        
+        // 页面加载完成后调用API获取数据
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchQuestionBanks();
+            fetchQuestions();
+            
+            // 绑定表单提交事件
+            document.getElementById('addQuestionForm').addEventListener('submit', addQuestion);
+            document.getElementById('editQuestionForm').addEventListener('submit', editQuestion);
+            
+            // 绑定删除确认按钮事件
+            document.getElementById('confirmDeleteQuestionBtn').addEventListener('click', confirmDeleteQuestion);
+            
+            // 绑定题型变化事件
+            document.getElementById('questionType').addEventListener('change', generateOptionsFields);
+        });
+        
+        // 获取题库列表
+        function fetchQuestionBanks() {
+            // 显示加载状态
+            const selectElements = [
+                document.getElementById('questionBankSelect'),
+                document.getElementById('questionBankId')
+            ];
+            
+            selectElements.forEach(select => {
+                select.innerHTML = '<option value="">加载中...</option>';
+            });
+            
+            fetch(`${API_BASE_URL}/question-banks`, {
+                credentials: 'include' // 包含凭证（cookie）
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            // 认证失败，显示友好提示
+                            showErrorMessage('获取题库列表失败: 请先登录');
+                            // 不抛出错误，避免页面崩溃
+                            return [];
+                        } else if (response.status === 302) {
+                            showErrorMessage('获取题库列表失败: 请先登录');
+                            return [];
+                        }
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // 处理不同的数据格式
+                    let banks = data;
+                    if (typeof data === 'object' && data.content) {
+                        // 如果返回的是带有content属性的对象，使用content数组
+                        banks = data.content;
+                    } else if (!Array.isArray(data)) {
+                        // 如果不是数组，默认为空数组
+                        banks = [];
+                    }
+                    
+                    selectElements.forEach(select => {
+                        select.innerHTML = '<option value="">选择题库</option>';
+                        banks.forEach(bank => {
+                            const option = document.createElement('option');
+                            option.value = bank.id;
+                            option.textContent = bank.title;
+                            select.appendChild(option);
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching question banks:', error);
+                    showErrorMessage('获取题库列表失败，请稍后重试');
+                    
+                    // 恢复默认选项
+                    selectElements.forEach(select => {
+                        select.innerHTML = '<option value="">选择题库</option>';
+                    });
+                });
+        }
+        
+        // 生成选项字段
+        function generateOptionsFields() {
+            const questionType = document.getElementById('questionType').value;
+            const optionsSection = document.getElementById('optionsSection');
+            
+            optionsSection.innerHTML = '<label class="form-label">选项</label>';
+            
+            if (questionType === 'single_choice' || questionType === 'multiple_choice') {
+                const options = ['A', 'B', 'C', 'D'];
+                options.forEach(option => {
+                    const optionGroup = document.createElement('div');
+                    optionGroup.className = 'mb-2';
+                    optionGroup.innerHTML = `
+                        <div class="input-group">
+                            <span class="input-group-text">${option}</span>
+                            <input type="text" class="form-control" name="options[${option}]" placeholder="选项${option}内容">
+                        </div>
+                    `;
+                    optionsSection.appendChild(optionGroup);
+                });
+            } else if (questionType === 'true_false') {
+                optionsSection.innerHTML = `
+                    <label class="form-label">选项</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="trueFalseOption" id="trueOption" value="true">
+                        <label class="form-check-label" for="trueOption">正确</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="trueFalseOption" id="falseOption" value="false">
+                        <label class="form-check-label" for="falseOption">错误</label>
+                    </div>
+                `;
+            }
+        }
+        
+        // 获取题目列表
+        function fetchQuestions() {
+            // 显示加载状态
+            const tbody = document.getElementById('questionTableBody');
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">加载中...</span></div> 加载中...</td></tr>';
+            
+            fetch(`${API_BASE_URL}/questions`, {
+                credentials: 'include' // 包含凭证（cookie）
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            // 认证失败，显示友好提示
+                            showErrorMessage('获取题目列表失败: 请先登录');
+                            // 不抛出错误，避免页面崩溃
+                            return [];
+                        } else if (response.status === 302) {
+                            showErrorMessage('获取题目列表失败: 请先登录');
+                            return [];
+                        }
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    renderQuestions(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching questions:', error);
+                    showErrorMessage('获取题目列表失败，请稍后重试');
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center">暂无数据</td></tr>';
+                });
+        }
+        
+        // 搜索题目
+        function searchQuestions() {
+            const keyword = document.getElementById('keywordInput').value;
+            const bankId = document.getElementById('questionBankSelect').value;
+            const type = document.getElementById('questionTypeSelect').value;
+            const difficulty = document.getElementById('difficultySelect').value;
+            
+            // 获取搜索按钮并设置为加载状态
+            const searchBtn = document.querySelector('button[onclick="searchQuestions()"]');
+            const originalText = searchBtn.innerHTML;
+            searchBtn.disabled = true;
+            searchBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 搜索中...';
+            
+            // 使用统一的搜索端点，支持所有过滤条件
+            let url = `${API_BASE_URL}/questions/search`;
+            const params = [];
+            
+            // 构建查询参数
+            if (keyword) params.push(`keyword=${encodeURIComponent(keyword)}`);
+            if (bankId) params.push(`bankId=${encodeURIComponent(bankId)}`);
+            if (type) params.push(`type=${encodeURIComponent(type)}`);
+            if (difficulty) params.push(`difficulty=${encodeURIComponent(difficulty)}`);
+            
+            // 拼接查询参数到URL
+            if (params.length > 0) {
+                url += `?${params.join('&')}`;
+            }
+            
+            fetch(url, {
+                credentials: 'include' // 包含凭证（cookie）
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            // 认证失败，显示友好提示
+                            showErrorMessage('搜索题目失败: 请先登录');
+                            // 不抛出错误，避免页面崩溃
+                            return [];
+                        } else if (response.status === 302) {
+                            showErrorMessage('搜索题目失败: 请先登录');
+                            return [];
+                        }
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    renderQuestions(data);
+                })
+                .catch(error => {
+                    console.error('Error searching questions:', error);
+                    showErrorMessage('搜索题目失败，请稍后重试');
+                })
+                .finally(() => {
+                    // 恢复按钮状态
+                    searchBtn.disabled = false;
+                    searchBtn.innerHTML = originalText;
+                });
+        }
+        
+        // 渲染题目列表
+        function renderQuestions(questions) {
+            const tbody = document.getElementById('questionTableBody');
+            
+            // 处理不同的数据格式
+            let qs = questions;
+            if (typeof questions === 'object' && questions.content) {
+                // 如果返回的是带有content属性的对象，使用content数组
+                qs = questions.content;
+            } else if (!Array.isArray(questions)) {
+                // 如果不是数组，默认为空数组
+                qs = [];
+            }
+            
+            if (qs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center">暂无数据</td></tr>';
+                return;
+            }
+            
+            let html = '';
+            qs.forEach(question => {
+                html += `
+                    <tr>
+                        <td>${question.id}</td>
+                        <td>${question.text.substring(0, 50)}${question.text.length > 50 ? '...' : ''}</td>
+                        <td>${getQuestionTypeName(question.type)}</td>
+                        <td>${getDifficultyName(question.difficulty)}</td>
+                        <td>${question.questionBank ? question.questionBank.title : '未分配'}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary me-1" onclick="showEditQuestionModal(${JSON.stringify(question).replace(/"/g, '&quot;')})"><i class="bi bi-pencil"></i> 编辑</button>
+                            <button class="btn btn-sm btn-danger" onclick="showDeleteQuestionModal(${question.id})"><i class="bi bi-trash"></i> 删除</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+        }
+        
+        // 获取题型名称
+        function getQuestionTypeName(type) {
+            const typeMap = {
+                'single_choice': '单选题',
+                'multiple_choice': '多选题',
+                'true_false': '判断题',
+                'fill_blank': '填空题',
+                'essay': '简答题'
+            };
+            return typeMap[type] || type;
+        }
+        
+        // 获取难度名称
+        function getDifficultyName(difficulty) {
+            const difficultyMap = {
+                'easy': '简单',
+                'medium': '中等',
+                'hard': '困难'
+            };
+            return difficultyMap[difficulty] || difficulty;
+        }
+        
+        // 显示编辑题目模态框
+        function showEditQuestionModal(question) {
+            // 实现编辑题目模态框的显示和数据填充
+            alert('编辑功能开发中');
+        }
+        
+        // 显示删除确认模态框
+        function showDeleteQuestionModal(id) {
+            /**
+             * 显示删除确认模态框
+             * @param {number} id - 要删除的题目ID
+             */
+            currentDeleteQuestionId = id;
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteQuestionConfirmModal'));
+            deleteModal.show();
+        }
+        
+        // 添加题目
+        function addQuestion(event) {
+            /**
+             * 添加新题目
+             * @param {Event} event - 表单提交事件
+             */
+            event.preventDefault();
+            
+            // 获取提交按钮并设置为加载状态
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 加载中...';
+            
+            const formData = new FormData(event.target);
+            
+            // 表单验证
+            const bankId = formData.get('questionBankId');
+            if (!bankId) {
+                showErrorMessage('请选择所属题库');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                return;
+            }
+            
+            const text = formData.get('text');
+            if (!text) {
+                showErrorMessage('请输入题目内容');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                return;
+            }
+            
+            const answer = formData.get('answer');
+            if (!answer) {
+                showErrorMessage('请输入题目答案');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                return;
+            }
+            
+            const score = formData.get('score');
+            if (!score || isNaN(parseFloat(score))) {
+                showErrorMessage('请输入有效的题目分值');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                return;
+            }
+            
+            const questionData = {
+                text: text,
+                type: formData.get('type'),
+                difficulty: formData.get('difficulty'),
+                answer: answer,
+                score: parseFloat(score),
+                tags: formData.get('tags') || '',
+                analysis: formData.get('analysis') || ''
+            };
+            
+            // 处理选项
+            if (questionData.type === 'single_choice' || questionData.type === 'multiple_choice') {
+                let hasValidOption = false;
+                
+                // 只处理有内容的选项
+                for (let i = 0; i < event.target.elements.length; i++) {
+                    const element = event.target.elements[i];
+                    if (element.name.startsWith('options[')) {
+                        const optionKey = element.name.match(/options\[(.*?)\]/)[1];
+                        const optionValue = element.value.trim();
+                        
+                        if (optionValue) {
+                            // 根据选项字母设置对应的字段
+                            switch (optionKey) {
+                                case 'A':
+                                    questionData.optionA = optionValue;
+                                    break;
+                                case 'B':
+                                    questionData.optionB = optionValue;
+                                    break;
+                                case 'C':
+                                    questionData.optionC = optionValue;
+                                    break;
+                                case 'D':
+                                    questionData.optionD = optionValue;
+                                    break;
+                            }
+                            hasValidOption = true;
+                        } else {
+                            // 如果选项为空，根据字母设置对应的字段为默认值
+                            switch (optionKey) {
+                                case 'A':
+                                    questionData.optionA = '选项A';
+                                    break;
+                                case 'B':
+                                    questionData.optionB = '选项B';
+                                    break;
+                                case 'C':
+                                    questionData.optionC = null;
+                                    break;
+                                case 'D':
+                                    questionData.optionD = null;
+                                    break;
+                            }
+                        }
+                    }
+                }
+                
+                // 验证选择题必须有至少一个选项
+                if (!hasValidOption) {
+                    showErrorMessage('选择题必须至少有一个有效选项');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                    return;
+                }
+            } else {
+                // 非选择题类型，设置默认选项
+                questionData.optionA = '选项A';
+                questionData.optionB = '选项B';
+                questionData.optionC = null;
+                questionData.optionD = null;
+            }
+            
+            console.log('提交的题目数据:', questionData);
+            
+            fetch(`${API_BASE_URL}/questions/bank/${bankId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include', // 包含凭证（cookie）
+                body: JSON.stringify(questionData)
+            })
+            .then(response => {
+                console.log('API响应状态:', response.status);
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        // 认证失败，显示友好提示
+                        showErrorMessage('添加题目失败: 请先登录');
+                        // 不抛出错误，避免页面崩溃
+                        return null;
+                    } else if (response.status === 302) {
+                        showErrorMessage('添加题目失败: 请先登录');
+                        return null;
+                    } else {
+                        // 获取详细错误信息
+                        return response.text().then(errorText => {
+                            console.error('API错误响应:', errorText);
+                            throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
+                        });
+                    }
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('API成功响应:', data);
+                if (data) {
+                    // 关闭模态框
+                    const addModal = bootstrap.Modal.getInstance(document.getElementById('addQuestionModal'));
+                    addModal.hide();
+                    
+                    // 重置表单
+                    event.target.reset();
+                    
+                    // 重新加载数据
+                    fetchQuestions();
+                    
+                    // 显示成功消息
+                    showSuccessMessage('题目添加成功');
+                }
+            })
+            .catch(error => {
+                console.error('Error adding question:', error);
+                showErrorMessage(`添加题目失败: ${error.message}`);
+            })
+            .finally(() => {
+                // 恢复按钮状态
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            });
+        }
+        
+        // 编辑题目
+        function editQuestion(event) {
+            /**
+             * 编辑题目
+             * @param {Event} event - 表单提交事件
+             */
+            event.preventDefault();
+            // 实现编辑题目功能
+            showErrorMessage('编辑功能开发中');
+        }
+        
+        // 确认删除题目
+        function confirmDeleteQuestion() {
+            /**
+             * 确认删除题目
+             */
+            if (!currentDeleteQuestionId) return;
+            
+            // 获取删除按钮并设置为加载状态
+            const deleteBtn = document.getElementById('confirmDeleteQuestionBtn');
+            const originalText = deleteBtn.textContent;
+            deleteBtn.disabled = true;
+            deleteBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 删除中...';
+            
+            fetch(`${API_BASE_URL}/questions/${currentDeleteQuestionId}`, {
+                method: 'DELETE',
+                credentials: 'include' // 包含凭证（cookie）
+            })
+            .then(response => {
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        // 认证失败，显示友好提示
+                        showErrorMessage('删除题目失败: 请先登录');
+                        // 不抛出错误，避免页面崩溃
+                        return null;
+                    } else if (response.status === 302) {
+                        showErrorMessage('删除题目失败: 请先登录');
+                        return null;
+                    }
+                    throw new Error('Network response was not ok');
+                }
+                return response;
+            })
+            .then(data => {
+                if (data) {
+                    // 关闭模态框
+                    const deleteModal = bootstrap.Modal.getInstance(document.getElementById('deleteQuestionConfirmModal'));
+                    deleteModal.hide();
+                    
+                    // 重新加载数据
+                    fetchQuestions();
+                    
+                    // 显示成功消息
+                    showSuccessMessage('题目删除成功');
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting question:', error);
+                showErrorMessage('删除题目失败，请稍后重试');
+            })
+            .finally(() => {
+                // 恢复按钮状态
+                deleteBtn.disabled = false;
+                deleteBtn.innerHTML = originalText;
+                currentDeleteQuestionId = null;
+            });
+        }
+        
+        // 显示成功消息
+        function showSuccessMessage(message) {
+            /**
+             * 显示成功消息
+             * @param {string} message - 要显示的成功消息
+             */
+            // 创建成功消息元素
+            const successDiv = document.createElement('div');
+            successDiv.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3 z-50';
+            successDiv.role = 'alert';
+            successDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            
+            // 添加到页面
+            document.body.appendChild(successDiv);
+            
+            // 3秒后自动关闭
+            setTimeout(() => {
+                successDiv.remove();
+            }, 3000);
+        }
+    </script>
+</div>
