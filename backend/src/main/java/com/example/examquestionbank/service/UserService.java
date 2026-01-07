@@ -57,4 +57,11 @@ public class UserService {
     public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
+
+    /**
+     * 获取用户总数
+     */
+    public long getUserCount() {
+        return userRepository.count();
+    }
 }

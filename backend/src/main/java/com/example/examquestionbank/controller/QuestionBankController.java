@@ -32,7 +32,7 @@ public class QuestionBankController {
 
     // 根据ID获取题库
     @GetMapping("/{id}")
-    public ResponseEntity<QuestionBank> getQuestionBankById(@PathVariable String id) {
+    public ResponseEntity<QuestionBank> getQuestionBankById(@PathVariable Long id) {
         QuestionBank bank = questionBankService.getQuestionBankById(id)
                 .orElseThrow(() -> new RuntimeException("QuestionBank not found with id: " + id));
         return new ResponseEntity<>(bank, HttpStatus.OK);
@@ -47,15 +47,22 @@ public class QuestionBankController {
 
     // 更新题库
     @PutMapping("/{id}")
-    public ResponseEntity<QuestionBank> updateQuestionBank(@PathVariable String id, @RequestBody QuestionBank bankDetails) {
+    public ResponseEntity<QuestionBank> updateQuestionBank(@PathVariable Long id, @RequestBody QuestionBank bankDetails) {
         QuestionBank updatedBank = questionBankService.updateQuestionBank(id, bankDetails);
         return new ResponseEntity<>(updatedBank, HttpStatus.OK);
     }
 
     // 删除题库
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteQuestionBank(@PathVariable String id) {
+    public ResponseEntity<Void> deleteQuestionBank(@PathVariable Long id) {
         questionBankService.deleteQuestionBank(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // 获取题库总数
+    @GetMapping("/count")
+    public ResponseEntity<Long> getQuestionBankCount() {
+        long count = questionBankService.getQuestionBankCount();
+        return ResponseEntity.ok(count);
     }
 }

@@ -134,31 +134,28 @@ public class Question {
             // 打乱选项顺序
             Collections.shuffle(options);
 
-            // 创建映射关系：原选项 -> 新选项
-            // 例如：原A -> 新B，表示原A选项现在在新的B位置
-            String[] newOptions = new String[4];
-            String[] originalKeys = {"A", "B", "C", "D"};
-            
-            // 重新设置选项并记录映射关系
+            // 重置所有选项为null，准备重新赋值
+            optionA = null;
+            optionB = null;
+            optionC = null;
+            optionD = null;
+
+            // 重新设置选项，只包含有内容的选项
             for (int i = 0; i < options.size(); i++) {
                 Option opt = options.get(i);
                 char newKey = (char) ('A' + i);
                 switch (newKey) {
                     case 'A':
                         optionA = opt.content;
-                        newOptions[0] = opt.key;
                         break;
                     case 'B':
                         optionB = opt.content;
-                        newOptions[1] = opt.key;
                         break;
                     case 'C':
                         optionC = opt.content;
-                        newOptions[2] = opt.key;
                         break;
                     case 'D':
                         optionD = opt.content;
-                        newOptions[3] = opt.key;
                         break;
                 }
             }
@@ -167,23 +164,29 @@ public class Question {
             if (answer != null && !answer.isEmpty()) {
                 String[] correctAnswers = answer.split(",");
                 StringBuilder newAnswer = new StringBuilder();
-                for (int i = 0; i < correctAnswers.length; i++) {
-                    String oldKey = correctAnswers[i].trim();
-                    // 查找原选项在新位置的索引
-                    for (int j = 0; j < originalKeys.length; j++) {
-                        if (oldKey.equals(originalKeys[j]) && newOptions[j] != null) {
-                            // 找到原选项对应的新位置
-                            char newKeyChar = (char) ('A' + j);
-                            newAnswer.append(newKeyChar);
+                
+                // 创建映射关系：原选项 -> 新选项
+                // 例如：原A -> 新B，表示原A选项现在在新的B位置
+                for (int i = 0; i < options.size(); i++) {
+                    Option opt = options.get(i);
+                    char newKey = (char) ('A' + i);
+                    
+                    // 检查当前原选项是否在正确答案中
+                    for (String correctAnswer : correctAnswers) {
+                        if (correctAnswer.trim().equals(opt.key)) {
+                            newAnswer.append(newKey);
+                            newAnswer.append(",");
                             break;
                         }
                     }
-                    if (i < correctAnswers.length - 1) {
-                        newAnswer.append(",");
-                    }
                 }
-                // 更新答案
-                answer = newAnswer.toString();
+                
+                // 移除末尾的逗号
+                if (newAnswer.length() > 0) {
+                    newAnswer.setLength(newAnswer.length() - 1);
+                    // 更新答案
+                    answer = newAnswer.toString();
+                }
             }
         }
     }

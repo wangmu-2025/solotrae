@@ -19,12 +19,12 @@ public class QuestionService {
     @Autowired
     private QuestionBankRepository questionBankRepository;
 
-    public Question createQuestion(String bankId, Question question) {
-        // 首先检查题库是否存在
+    public Question createQuestion(Long bankId, Question question) {
+        // 查找对应的题库
         QuestionBank questionBank = questionBankRepository.findById(bankId)
                 .orElseThrow(() -> new RuntimeException("QuestionBank not found with id: " + bankId));
-
-        // 设置题目所属的题库
+        
+        // 设置题库关联
         question.setQuestionBank(questionBank);
         
         // 保存题目
@@ -39,7 +39,7 @@ public class QuestionService {
         return questionRepository.findById(id);
     }
 
-    public List<Question> getQuestionsByBankId(String bankId) {
+    public List<Question> getQuestionsByBankId(Long bankId) {
         return questionRepository.findByQuestionBankId(bankId);
     }
 
@@ -61,7 +61,7 @@ public class QuestionService {
     }
 
     // 根据题库ID和题型获取题目
-    public List<Question> getQuestionsByBankIdAndType(String bankId, String type) {
+    public List<Question> getQuestionsByBankIdAndType(Long bankId, String type) {
         return questionRepository.findByQuestionBankIdAndType(bankId, type);
     }
 
@@ -85,5 +85,12 @@ public class QuestionService {
 
     public void deleteQuestion(Long id) {
         questionRepository.deleteById(id);
+    }
+
+    /**
+     * 获取题目总数
+     */
+    public long getQuestionCount() {
+        return questionRepository.count();
     }
 }

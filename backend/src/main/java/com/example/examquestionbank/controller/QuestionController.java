@@ -18,7 +18,7 @@ public class QuestionController {
 
     // 在指定题库中创建题目
     @PostMapping("/bank/{bankId}")
-    public ResponseEntity<Question> createQuestion(@PathVariable String bankId, @RequestBody Question question) {
+    public ResponseEntity<Question> createQuestion(@PathVariable Long bankId, @RequestBody Question question) {
         Question createdQuestion = questionService.createQuestion(bankId, question);
         return new ResponseEntity<>(createdQuestion, HttpStatus.CREATED);
     }
@@ -40,7 +40,7 @@ public class QuestionController {
 
     // 根据题库ID获取题目
     @GetMapping("/bank/{bankId}")
-    public ResponseEntity<List<Question>> getQuestionsByBankId(@PathVariable String bankId) {
+    public ResponseEntity<List<Question>> getQuestionsByBankId(@PathVariable Long bankId) {
         List<Question> questions = questionService.getQuestionsByBankId(bankId);
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
@@ -75,7 +75,7 @@ public class QuestionController {
 
     // 根据题库ID和题型获取题目
     @GetMapping("/bank/{bankId}/type/{type}")
-    public ResponseEntity<List<Question>> getQuestionsByBankIdAndType(@PathVariable String bankId, @PathVariable String type) {
+    public ResponseEntity<List<Question>> getQuestionsByBankIdAndType(@PathVariable Long bankId, @PathVariable String type) {
         List<Question> questions = questionService.getQuestionsByBankIdAndType(bankId, type);
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
@@ -92,5 +92,12 @@ public class QuestionController {
     public ResponseEntity<Void> deleteQuestion(@PathVariable Long id) {
         questionService.deleteQuestion(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // 获取题目总数
+    @GetMapping("/count")
+    public ResponseEntity<Long> getQuestionCount() {
+        long count = questionService.getQuestionCount();
+        return ResponseEntity.ok(count);
     }
 }

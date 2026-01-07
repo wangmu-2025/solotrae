@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface QuestionBankRepository extends JpaRepository<QuestionBank, String> {
+public interface QuestionBankRepository extends JpaRepository<QuestionBank, Long> {
     List<QuestionBank> findByCategory(String category);
     List<QuestionBank> findByTitleContainingIgnoreCase(String keyword);
 }

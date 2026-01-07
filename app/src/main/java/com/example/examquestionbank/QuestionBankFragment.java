@@ -41,23 +41,36 @@ public class QuestionBankFragment extends Fragment {
     private void initQuestionBanks() {
         questionBanks = new ArrayList<>();
 
-        // 创建默认题库（历史题库）
-        QuestionManager questionManager = new QuestionManager();
-        // 使用requireContext()确保上下文可用
-        questionManager.loadQuestions(requireContext());
+        // 使用ApiService从后端获取题库列表
+        Thread thread = new Thread(() -> {
+            ApiService apiService = new ApiService();
+            List<QuestionBank> result = apiService.getQuestionBanks();
+            
+            // 在主线程更新UI
+            requireActivity().runOnUiThread(() -> {
+                if (result != null && !result.isEmpty()) {
+                    questionBanks.clear();
+                    questionBanks.addAll(result);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    // 如果API获取失败，使用默认题库
+                    QuestionManager questionManager = new QuestionManager();
+                    questionManager.loadQuestions(requireContext());
 
-        QuestionBank historyBank = new QuestionBank(
-                "history",
-                "历史题库",
-                "包含中国历史和世界历史的经典题目",
-                "历史",
-                questionManager.getQuestionList()
-        );
+                    QuestionBank historyBank = new QuestionBank(
+                            "history",
+                            "历史题库",
+                            "包含中国历史和世界历史的经典题目",
+                            "历史",
+                            questionManager.getQuestionList()
+                    );
 
-        questionBanks.add(historyBank);
-
-        // 可以添加更多题库
-        // ...
+                    questionBanks.add(historyBank);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        });
+        thread.start();
     }
 
     // 题库点击事件处理

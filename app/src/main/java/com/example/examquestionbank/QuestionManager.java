@@ -35,47 +35,64 @@ public class QuestionManager {
         currentIndex = 0;
 
         try {
-            // 只使用JSON格式作为唯一数据源
-            String fileName;
-            if (bankId != null) {
-                fileName = bankId + ".json";
-            } else {
-                fileName = "questions.json";
-            }
-            
+            // 1. 优先从后端API获取题目
             boolean loaded = false;
-            
-            // 1. 优先从assets目录读取JSON文件
-            try {
-                try (InputStream is = context.getAssets().open(fileName);
-                     Reader reader = new InputStreamReader(is)) {
-                    Gson gson = new Gson();
-                    Type questionBankType = new TypeToken<QuestionBank>() {}.getType();
-                    QuestionBank questionBank = gson.fromJson(reader, questionBankType);
-                    if (questionBank != null && questionBank.getQuestions() != null) {
-                        questionList.addAll(questionBank.getQuestions());
+            if (bankId != null) {
+                try {
+                    ApiService apiService = new ApiService();
+                    List<Question> questions = apiService.getQuestionsByBankId(bankId);
+                    if (questions != null && !questions.isEmpty()) {
+                        questionList.addAll(questions);
                         loaded = true;
-                        Log.d(TAG, "Loading questions from assets JSON file: " + fileName);
+                        Log.d(TAG, "Loading questions from API for bank: " + bankId);
+                    }
+                } catch (Exception e) {
+                    Log.d(TAG, "Failed to load questions from API, trying local files: " + e.getMessage());
+                }
+            }
+
+            // 2. 如果API获取失败，从本地文件读取
+            if (!loaded) {
+                // 只使用JSON格式作为唯一数据源
+                String fileName;
+                if (bankId != null) {
+                    fileName = bankId + ".json";
+                } else {
+                    fileName = "questions.json";
+                }
+                
+                // 2.1 优先从assets目录读取JSON文件
+                try {
+                    try (InputStream is = context.getAssets().open(fileName);
+                         Reader reader = new InputStreamReader(is)) {
+                        Gson gson = new Gson();
+                        Type questionBankType = new TypeToken<QuestionBank>() {}.getType();
+                        QuestionBank questionBank = gson.fromJson(reader, questionBankType);
+                        if (questionBank != null && questionBank.getQuestions() != null) {
+                            questionList.addAll(questionBank.getQuestions());
+                            loaded = true;
+                            Log.d(TAG, "Loading questions from assets JSON file: " + fileName);
+                        }
+                    }
+                } catch (IOException e) {
+                    Log.d(TAG, "JSON file not found in assets, trying files directory");
+                }
+                
+                // 2.2 如果assets目录没有，尝试从files目录读取
+                if (!loaded) {
+                    File jsonFile = new File(context.getFilesDir(), fileName);
+                    if (jsonFile.exists()) {
+                        // 读取JSON格式题库
+                        Log.d(TAG, "Loading questions from files directory JSON file: " + jsonFile.getName());
+                        loadQuestionsFromJson(context, jsonFile);
+                        loaded = true;
                     }
                 }
-            } catch (IOException e) {
-                Log.d(TAG, "JSON file not found in assets, trying files directory");
-            }
-            
-            // 2. 如果assets目录没有，尝试从files目录读取
-            if (!loaded) {
-                File jsonFile = new File(context.getFilesDir(), fileName);
-                if (jsonFile.exists()) {
-                    // 读取JSON格式题库
-                    Log.d(TAG, "Loading questions from files directory JSON file: " + jsonFile.getName());
-                    loadQuestionsFromJson(context, jsonFile);
-                    loaded = true;
+                
+                // 2.3 如果都没有找到，记录错误
+                if (!loaded) {
+                    Log.e(TAG, "JSON file not found: " + fileName);
                 }
-            }
-            
-            // 3. 如果都没有找到，记录错误
-            if (!loaded) {
-                Log.e(TAG, "JSON file not found: " + fileName);
             }
         } catch (Exception e) {
             Log.e(TAG, "Error loading questions: " + e.getMessage(), e);

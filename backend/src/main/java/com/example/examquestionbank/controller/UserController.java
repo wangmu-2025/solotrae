@@ -51,4 +51,11 @@ public class UserController {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    // 获取用户总数
+    @GetMapping("/count")
+    public ResponseEntity<Long> getUserCount() {
+        long count = userService.getUserCount();
+        return ResponseEntity.ok(count);
+    }
 }

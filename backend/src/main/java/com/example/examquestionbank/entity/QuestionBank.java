@@ -17,7 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 public class QuestionBank {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotBlank(message = "题库名称不能为空")
     @Size(min = 2, max = 100, message = "题库名称长度必须在2到100个字符之间")

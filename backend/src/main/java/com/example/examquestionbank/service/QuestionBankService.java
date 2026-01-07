@@ -22,7 +22,7 @@ public class QuestionBankService {
         return questionBankRepository.findAll();
     }
 
-    public Optional<QuestionBank> getQuestionBankById(String id) {
+    public Optional<QuestionBank> getQuestionBankById(Long id) {
         return questionBankRepository.findById(id);
     }
 
@@ -30,7 +30,7 @@ public class QuestionBankService {
         return questionBankRepository.findByCategory(category);
     }
 
-    public QuestionBank updateQuestionBank(String id, QuestionBank questionBankDetails) {
+    public QuestionBank updateQuestionBank(Long id, QuestionBank questionBankDetails) {
         QuestionBank questionBank = questionBankRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("QuestionBank not found with id: " + id));
 
@@ -41,7 +41,14 @@ public class QuestionBankService {
         return questionBankRepository.save(questionBank);
     }
 
-    public void deleteQuestionBank(String id) {
+    public void deleteQuestionBank(Long id) {
         questionBankRepository.deleteById(id);
+    }
+
+    /**
+     * 获取题库总数
+     */
+    public long getQuestionBankCount() {
+        return questionBankRepository.count();
     }
 }

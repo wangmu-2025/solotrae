@@ -8,10 +8,10 @@ import java.util.List;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Long> {
-    List<Question> findByQuestionBankId(String questionBankId);
+    List<Question> findByQuestionBankId(Long questionBankId);
     List<Question> findByDifficulty(String difficulty);
     List<Question> findByTagsContaining(String tag);
     List<Question> findByTextContainingIgnoreCase(String keyword);
     List<Question> findByType(String type);
-    List<Question> findByQuestionBankIdAndType(String questionBankId, String type);
+    List<Question> findByQuestionBankIdAndType(Long questionBankId, String type);
 }
